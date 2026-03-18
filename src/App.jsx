@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Users, BookOpen, Send, SquareTerminal, 
+  Users, BookOpen, Send, Terminal, 
   TerminalSquare, Camera, CheckSquare, Square
 } from 'lucide-react';
 import './index.css';
@@ -85,7 +85,7 @@ function App() {
           {/* Panel 1: Tasks & Goals */}
           <div className="panel">
             <div className="panel-header pixel-font">
-              <SquareTerminal size={24} />
+              <Terminal size={24} />
               내 목표 & 과제
             </div>
             
