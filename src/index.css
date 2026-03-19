@@ -274,6 +274,29 @@ header {
   transition: width 0.5s ease;
 }
 
+.memb.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.load-more-btn {
+  background: transparent;
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.load-more-btn:hover {
+  background: rgba(12, 245, 116, 0.1);
+  box-shadow: 0 0 10px var(--neon-green);
+}
+
 .member-list {
   display: flex;
   flex-direction: column;

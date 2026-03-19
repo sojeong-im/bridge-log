@@ -12,6 +12,7 @@ function App() {
   const [stressStyle, setStressStyle] = useState([]);
   const [isMember, setIsMember] = useState(false);
   const [memberCode, setMemberCode] = useState('');
+  const [visiblePosts, setVisiblePosts] = useState(5);
   
   // Timer State
   const [timeLeft, setTimeLeft] = useState(25 * 60);
@@ -36,45 +37,43 @@ function App() {
 
   const [newPost, setNewPost] = useState('');
   const [feed, setFeed] = useState([
-    {
-      id: 1,
-      name: '로보 (컴공)',
-      avatar: 'RO',
-      content: '🔥 오늘 중앙대 정문 주변 카페에서 같이 카공할 사람! (3시~7시)',
-      image: null,
-      time: '방금 전'
-    },
-    {
-      id: 2,
-      name: '유진스 (심리)',
-      avatar: 'YJ',
-      content: '논문 통계 돌리느라 하루가 다 갔네요..  SPSS랑 싸우는 중 ㅠㅠ 그래도 오늘 목표는 다 했습니다!',
-      image: null,
-      time: '23분 전'
-    },
-    {
-      id: 2,
-      name: '건축왕 (건축)',
-      avatar: 'CW',
-      content: '설계 마감 D-3. 밤샘 이틀차입니다. 다들 카페인 충전 하시고 화이팅해요!',
-      image: 'https://images.unsplash.com/photo-1503387762-592dea58ef01?w=400&q=80',
-      time: '1시간 전'
-    },
-    {
-      id: 3,
-      name: '미뉴 (경영)',
-      avatar: 'MN',
-      content: '공인중개사 1차 인강 클리어! 이번 기수는 유독 공부 열기가 뜨거운 것 같아요.',
-      image: null,
-      time: '3시간 전'
-    }
+    { id: 1, name: '로보 (컴공)', avatar: '🦊', content: '🔥 오늘 중앙대 정문 주변 카페에서 같이 카공할 사람! (3시~7시)', time: '방금 전' },
+    { id: 2, name: '유진스 (심리)', avatar: 'YJ', content: '논문 통계 돌리느라 하루가 다 갔네요.. SPSS랑 싸우는 중 ㅠㅠ', time: '23분 전' },
+    { id: 3, name: '건축왕 (건축)', avatar: 'CW', content: '설계 마감 D-3. 밤샘 이틀차입니다. 다들 화이팅!', image: 'https://images.unsplash.com/photo-1503387762-592dea58ef01?w=400&q=80', time: '1시간 전' },
+    { id: 4, name: '미뉴 (경영)', avatar: 'MN', content: '공인중개사 1차 인강 클리어! 이번 기수는 유독 공부 열기가 뜨겁네요.', time: '3시간 전' },
+    { id: 5, name: '아르몽 (미대)', avatar: 'AM', content: '졸시 준비 중.. 드로잉만 수백장째 ㅠㅠ 그래도 뿌듯하네요!', time: '5시간 전' },
+    { id: 6, name: '머니마스터 (경제)', avatar: 'MM', content: '금융권 인턴 면접 뿌시고 왔습니다! 긍정 기운 나눠요~', time: '8시간 전' },
+    { id: 7, name: '작가님 (국문)', avatar: 'JK', content: '드디어 소설 한 단락 마무리. 밤 공기가 좋네요.', time: '어제' },
+    { id: 8, name: '로보 (컴공)', avatar: '🦊', content: '백준 골드 달성! Bridge Log 덕분에 꾸준히 하게 되네요.', time: '어제' },
+    { id: 9, name: '유진스 (심리)', avatar: 'YJ', content: '스터디 카페 12시간권 끊었습니다. 오늘은 여기서 죽는다.', time: '어제' },
+    { id: 10, name: '건축왕 (건축)', avatar: 'CW', content: '모형 제작 완료! 손가락에 본드 범벅이지만 행복함.', time: '2일 전' },
+    { id: 11, name: '미뉴 (경영)', avatar: 'MN', content: '오늘 회계 원리 수업 너무 어렵다.. 복습 같이 하실 분?', time: '2일 전' },
+    { id: 12, name: '아르몽 (미대)', avatar: 'AM', content: '작업실에서 발견한 예쁜 노을 공유해요~ ✨', image: 'https://images.unsplash.com/photo-1470252649358-96957c053e9a?w=400&q=80', time: '2일 전' },
+    { id: 13, name: '머니마스터 (경제)', avatar: 'MM', content: '매일 아침 6시 기상 챌린지 10일차 성공!', time: '3일 전' },
+    { id: 14, name: '작가님 (국문)', avatar: 'JK', content: '도서관 신착 도서 코너에서 보물 같은 책을 찾았어요.', time: '3일 전' },
+    { id: 15, name: '로보 (컴공)', avatar: '🦊', content: 'React hooks 개념 드디어 잡힘! 이제 프로젝트 시작!', time: '3일 전' },
+    { id: 16, name: '유진스 (심리)', avatar: 'YJ', content: '비 오는 날엔 역시 카페에서 클래식 들으며 공부하는 게 최고.', time: '4일 전' },
+    { id: 17, name: '건축왕 (건축)', avatar: 'CW', content: 'CAD 작업 하다가 파일 날라감.. 하 살려줘...', time: '4일 전' },
+    { id: 18, name: '미뉴 (경영)', avatar: 'MN', content: '팀플 무임승차 빌런 때문에 스트레스.. 운동으로 풀고 옵니다 ㅠ', time: '5일 전' },
+    { id: 19, name: '아르몽 (미대)', avatar: 'AM', content: '새로운 붓 샀다! 역시 장비빨이 최고야.', time: '5일 전' },
+    { id: 20, name: '머니마스터 (경제)', avatar: 'MM', content: '경제 뉴스 브리핑 정리 완료. 필독 리스트 공유할게요.', time: '6일 전' },
+    { id: 21, name: '작가님 (국문)', avatar: 'JK', content: '고전문학 산책 중.. 과거 사람들도 우리랑 비슷한 고민을 했네요.', time: '6일 전' },
+    { id: 22, name: '로보 (컴공)', avatar: '🦊', content: 'Github 잔디 심기 성공! 하루도 안 빠졌다.', time: '1주일 전' },
+    { id: 23, name: '유진스 (심리)', avatar: 'YJ', content: '엠비티아이 검사 다시 해봤는데 성격 바뀜 ㅋㅋ 신기함', time: '1주일 전' },
+    { id: 24, name: '건축왕 (건축)', avatar: 'CW', content: '유명 건축가 강연 듣고 왔는데 동기부여 제대로 됨!', time: '1주일 전' },
+    { id: 25, name: '미뉴 (경영)', avatar: 'MN', content: '스토리 마케팅 공부 중. 브릿지 랩 홍보 전략 짜보는 중?', time: '1주일 전' },
+    { id: 26, name: '아르몽 (미대)', avatar: 'AM', content: '색채학 너무 심오하다.. 세상에는 이렇게 많은 색이 있다니.', time: '2주일 전' },
+    { id: 27, name: '머니마스터 (경제)', avatar: 'MM', content: '주식 투자 스터디 모집 중! 소액으로 시작해보실 분?', time: '2주일 전' },
+    { id: 28, name: '작가님 (국문)', avatar: 'JK', content: '필사 챌린지 시작. 정지용 시인의 시를 옮겨 적어 봅니다.', time: '2주일 전' },
+    { id: 29, name: '로보 (컴공)', avatar: '🦊', content: '알고리즘 대회 본선 진출! 팀원 구함!!', time: '3주일 전' },
+    { id: 30, name: '유진스 (심리)', avatar: 'YJ', content: 'Bridge Lab 들어오고 나서 공부 시간이 2배로 늘었어요 💖', time: '한 달 전' },
   ]);
 
   const members = [
     { name: '유진스', major: '심리학과', status: 'online', goal: '논문 통계 완성', avatar: 'YJ', mood: '열공중' },
     { name: '건축왕', major: '건축학과', status: 'online', goal: '설계 마감', avatar: 'CW', mood: '밤샘중' },
     { name: '미뉴', major: '경영학과', status: 'busy', goal: '자격증 취득', avatar: 'MN', mood: '부재중' },
-    { name: '로보', major: '컴퓨터공학', status: 'online', goal: '코딩 테스트 대비', avatar: 'RO', mood: '화이팅' },
+    { name: '로보', major: '컴퓨터공학', status: 'online', goal: '코딩 테스트 대비', avatar: '🦊', mood: '화이팅' },
     { name: '아르몽', major: '미술대학', status: 'online', goal: '졸업 전시 기획', avatar: 'AM', mood: '드로잉 중' },
     { name: '머니마스터', major: '경제학과', status: 'offline', goal: '금융권 취업 준비', avatar: 'MM', mood: '로그오프' },
     { name: '작가님', major: '국어국문', status: 'online', goal: '창작 소설 탈고', avatar: 'JK', mood: '집중중' },
@@ -97,7 +96,7 @@ function App() {
     setFeed([{
       id: Date.now(),
       name: '나 (User)',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop',
+      avatar: 'User',
       content: newPost,
       image: null,
       time: '방금 전'
@@ -286,7 +285,7 @@ function App() {
           </div>
 
           <div className="feed-list">
-            {feed.map(post => (
+            {feed.slice(0, visiblePosts).map(post => (
               <div key={post.id} className="feed-item">
                 <div className="feed-header">
                   <div className="feed-avatar-mini pixel-font">{post.avatar}</div>
@@ -303,6 +302,14 @@ function App() {
                 )}
               </div>
             ))}
+            {visiblePosts < feed.length && (
+              <button 
+                className="load-more-btn pixel-font"
+                onClick={() => setVisiblePosts(prev => prev + 10)}
+              >
+                기록 더보기 (+10)
+              </button>
+            )}
           </div>
         </div>
 
