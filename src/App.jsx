@@ -26,44 +26,44 @@ function App() {
   ];
 
   const [tasks, setTasks] = useState([
-    { id: 1, text: '전공 서적 3챕터 요약', assignee: '심유진', deadline: 'D-3', completed: false },
-    { id: 2, text: '토익 오답노트 정리', assignee: '최민지', deadline: 'D-5', completed: true },
-    { id: 3, text: 'UI/UX 디자인 리서치', assignee: '강현준', deadline: '오늘', completed: true },
-    { id: 4, text: '알고리즘 기말 공지 확인', assignee: '박건우', deadline: 'D-12', completed: true },
-    { id: 5, text: '졸업 논문 초안 피드백', assignee: '심유진', deadline: 'D-1', completed: false },
-    { id: 6, text: '주간 루틴 기록 (Bridge Log)', assignee: '정동윤', deadline: '매주', completed: true },
+    { id: 1, text: '전공 서적 3챕터 요약', assignee: '유진스', deadline: 'D-3', completed: false },
+    { id: 2, text: '토익 오답노트 정리', assignee: '미뉴', deadline: 'D-5', completed: true },
+    { id: 3, text: 'UI/UX 디자인 리서치', assignee: '로보', deadline: '오늘', completed: true },
+    { id: 4, text: '알고리즘 기말 공지 확인', assignee: '건축왕', deadline: 'D-12', completed: true },
+    { id: 5, text: '졸업 논문 초안 피드백', assignee: '유진스', deadline: 'D-1', completed: false },
+    { id: 6, text: '주간 루틴 기록 (Bridge Log)', assignee: '머니마스터', deadline: '매주', completed: true },
   ]);
 
   const [newPost, setNewPost] = useState('');
   const [feed, setFeed] = useState([
     {
       id: 1,
-      name: '강현준 (컴공)',
-      avatar: 'KH',
+      name: '로보 (컴공)',
+      avatar: 'RO',
       content: '🔥 오늘 중앙대 정문 주변 카페에서 같이 카공할 사람! (3시~7시)',
       image: null,
       time: '방금 전'
     },
     {
       id: 2,
-      name: '심유진 (심리)',
-      avatar: 'SY',
+      name: '유진스 (심리)',
+      avatar: 'YJ',
       content: '논문 통계 돌리느라 하루가 다 갔네요..  SPSS랑 싸우는 중 ㅠㅠ 그래도 오늘 목표는 다 했습니다!',
       image: null,
       time: '23분 전'
     },
     {
       id: 2,
-      name: '박건우 (건축)',
-      avatar: 'PK',
+      name: '건축왕 (건축)',
+      avatar: 'CW',
       content: '설계 마감 D-3. 밤샘 이틀차입니다. 다들 카페인 충전 하시고 화이팅해요!',
       image: 'https://images.unsplash.com/photo-1503387762-592dea58ef01?w=400&q=80',
       time: '1시간 전'
     },
     {
       id: 3,
-      name: '최민지 (경영)',
-      avatar: 'CM',
+      name: '미뉴 (경영)',
+      avatar: 'MN',
       content: '공인중개사 1차 인강 클리어! 이번 기수는 유독 공부 열기가 뜨거운 것 같아요.',
       image: null,
       time: '3시간 전'
@@ -71,13 +71,13 @@ function App() {
   ]);
 
   const members = [
-    { name: '심유진', major: '심리학과', status: 'online', goal: '논문 통계 완성', avatar: 'SY', mood: '열공중' },
-    { name: '박건우', major: '건축학과', status: 'online', goal: '설계 마감', avatar: 'PK', mood: '밤샘중' },
-    { name: '최민지', major: '경영학과', status: 'busy', goal: '자격증 취득', avatar: 'CM', mood: '부재중' },
-    { name: '강현준', major: '컴퓨터공학', status: 'online', goal: '코딩 테스트 대비', avatar: 'KH', mood: '화이팅' },
-    { name: '윤아름', major: '미술대학', status: 'online', goal: '졸업 전시 기획', avatar: 'YA', mood: '드로잉 중' },
-    { name: '정동윤', major: '경제학과', status: 'offline', goal: '금융권 취업 준비', avatar: 'JD', mood: '로그오프' },
-    { name: '이지훈', major: '국어국문', status: 'online', goal: '창작 소설 탈고', avatar: 'LJ', mood: '집중중' },
+    { name: '유진스', major: '심리학과', status: 'online', goal: '논문 통계 완성', avatar: 'YJ', mood: '열공중' },
+    { name: '건축왕', major: '건축학과', status: 'online', goal: '설계 마감', avatar: 'CW', mood: '밤샘중' },
+    { name: '미뉴', major: '경영학과', status: 'busy', goal: '자격증 취득', avatar: 'MN', mood: '부재중' },
+    { name: '로보', major: '컴퓨터공학', status: 'online', goal: '코딩 테스트 대비', avatar: 'RO', mood: '화이팅' },
+    { name: '아르몽', major: '미술대학', status: 'online', goal: '졸업 전시 기획', avatar: 'AM', mood: '드로잉 중' },
+    { name: '머니마스터', major: '경제학과', status: 'offline', goal: '금융권 취업 준비', avatar: 'MM', mood: '로그오프' },
+    { name: '작가님', major: '국어국문', status: 'online', goal: '창작 소설 탈고', avatar: 'JK', mood: '집중중' },
   ];
 
   const toggleTask = (id) => {
