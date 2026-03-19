@@ -187,14 +187,45 @@ header {
 
 .task-item {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 12px 15px;
-  background: rgba(255, 255, 255, 0.05);
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.2s;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.task-content-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-assignee {
+  font-size: 0.75rem;
+  color: var(--neon-green);
+  opacity: 0.8;
+}
+
+.task-deadline {
+  font-size: 0.75rem;
+  color: #ff3366;
+  font-weight: bold;
+}
+
+.task-item.completed .task-assignee,
+.task-item.completed .task-deadline {
+  text-decoration: none;
+  opacity: 0.4;
 }
 
 .task-item:hover {

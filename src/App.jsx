@@ -26,12 +26,12 @@ function App() {
   ];
 
   const [tasks, setTasks] = useState([
-    { id: 1, text: '대학원 전공 서적 3챕터 요약', completed: false },
-    { id: 2, text: '토익 오답노트 정리', completed: true },
-    { id: 3, text: 'UI/UX 디자인 시스템 리서치', completed: true },
-    { id: 4, text: '알고리즘 기말 오픈카톡 공지 확인', completed: true },
-    { id: 5, text: '졸업 논문 초안 피드백 반영', completed: false },
-    { id: 6, text: '주간 스터디 루틴 기록 (Bridge Log)', completed: true },
+    { id: 1, text: '전공 서적 3챕터 요약', assignee: '심유진', deadline: 'D-3', completed: false },
+    { id: 2, text: '토익 오답노트 정리', assignee: '최민지', deadline: 'D-5', completed: true },
+    { id: 3, text: 'UI/UX 디자인 리서치', assignee: '강현준', deadline: '오늘', completed: true },
+    { id: 4, text: '알고리즘 기말 공지 확인', assignee: '박건우', deadline: 'D-12', completed: true },
+    { id: 5, text: '졸업 논문 초안 피드백', assignee: '심유진', deadline: 'D-1', completed: false },
+    { id: 6, text: '주간 루틴 기록 (Bridge Log)', assignee: '정동윤', deadline: '매주', completed: true },
   ]);
 
   const [newPost, setNewPost] = useState('');
@@ -207,7 +207,13 @@ function App() {
                 <div className="task-checkbox">
                   {task.completed && <CheckSquare size={16} color="black" />}
                 </div>
-                <span className="task-text">{task.text}</span>
+                <div className="task-content-inner">
+                  <span className="task-text">{task.text}</span>
+                  <div className="task-meta">
+                    <span className="task-assignee">{task.assignee}</span>
+                    <span className="task-deadline">{task.deadline}</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
