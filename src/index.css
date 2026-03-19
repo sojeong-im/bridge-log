@@ -1216,11 +1216,103 @@ header {
   box-shadow: 0 0 10px var(--neon-blue);
 }
 
+/* Mobile Responsive Refinements */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 768px) {
-  .apply-grid {
+  .app-container {
+    padding: 15px;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: space-between;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    white-space: nowrap;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-grid {
     grid-template-columns: 1fr;
   }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .life-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
   .apply-title {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
+  }
+
+  .apply-hero {
+    padding: 40px 20px;
+  }
+
+  .member-verify-nav {
+    width: 100%;
+  }
+
+  .member-code-input {
+    flex: 1;
+  }
+
+  /* Timer on mobile */
+  .timer-display {
+    font-size: 2.5rem;
+  }
+
+  .timer-controls {
+    flex-wrap: wrap;
+  }
+
+  .timer-btn {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  /* Footer Highlights */
+  .highlight-item {
+    min-width: 200px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-logo {
+    font-size: 2.5rem;
+  }
+
+  .landing-tagline {
+    font-size: 0.8rem;
+  }
+
+  .panel {
+    padding: 15px;
+  }
+
+  .task-text {
+    font-size: 0.9rem;
   }
 }
