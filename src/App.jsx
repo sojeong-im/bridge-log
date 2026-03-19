@@ -90,7 +90,7 @@ function App() {
             <div className="member-verify-nav">
               <input 
                 type="password" 
-                placeholder="코드 입력 (00347)" 
+                placeholder="멤버 코드 입력" 
                 value={memberCode}
                 onChange={(e) => setMemberCode(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleMemberVerify()}
