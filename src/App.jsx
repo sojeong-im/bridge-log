@@ -10,6 +10,8 @@ function App() {
   const [studentType, setStudentType] = useState('');
   const [studyStyle, setStudyStyle] = useState([]);
   const [stressStyle, setStressStyle] = useState([]);
+  const [isMember, setIsMember] = useState(false);
+  const [memberCode, setMemberCode] = useState('');
   const [tasks, setTasks] = useState([
     { id: 1, text: '운영체제 7단원 복습', completed: false },
     { id: 2, text: '리액트 컴포넌트 실습 과제', completed: true },
@@ -38,10 +40,18 @@ function App() {
   ]);
 
   const toggleTask = (id) => {
+    if (!isMember) {
+      alert('회원 전용 기능입니다. 멤버 코드를 입력해 주세요!');
+      return;
+    }
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
 
   const handlePost = () => {
+    if (!isMember) {
+      alert('회원 전용 기능입니다. 멤버 코드를 입력해 주세요!');
+      return;
+    }
     if (!newPost.trim()) return;
     setFeed([{
       id: Date.now(),
@@ -52,6 +62,16 @@ function App() {
       time: '방금 전'
     }, ...feed]);
     setNewPost('');
+  };
+
+  const handleMemberVerify = () => {
+    if (memberCode === '00347') {
+      setIsMember(true);
+      setMemberCode('');
+      alert('멤버 인증에 성공했습니다! 환영합니다.');
+    } else {
+      alert('잘못된 코드입니다. 다시 확인해 주세요.');
+    }
   };
 
   const completedCount = tasks.filter(t => t.completed).length;
@@ -65,11 +85,30 @@ function App() {
           <div className="pixel-bubble pixel-font">전멸 아님ㅋㅋ - 시험기간</div>
         </div>
         <nav className="nav-links pixel-font">
-          <a href="#" className="nav-item active">대시보드</a>
-          <a href="#" className="nav-item">로그 기록</a>
+          <a href="#" className="nav-item active">브릿지 로그 대시보드</a>
+          {!isMember && (
+            <div className="member-verify-nav">
+              <input 
+                type="password" 
+                placeholder="코드 입력 (00347)" 
+                value={memberCode}
+                onChange={(e) => setMemberCode(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleMemberVerify()}
+                className="member-code-input"
+              />
+              <button onClick={handleMemberVerify} className="verify-btn">인증</button>
+            </div>
+          )}
+          {isMember && <span className="member-badge pixel-font">MEMBER ACCESS</span>}
           <a href="#" className="nav-item" onClick={() => setView('landing')}>나가기</a>
         </nav>
       </header>
+      
+      {!isMember && (
+        <div className="view-only-notice pixel-font">
+          <Terminal size={16} /> 🔍 현재 '게스트 모드'입니다. 대시보드를 둘러보실 수 있지만, 수정은 불가능합니다.
+        </div>
+      )}
 
       {/* Hero Section (Recruitment) */}
       <section className="hero-banner">
@@ -159,18 +198,19 @@ function App() {
             <BookOpen size={24} />
             Bridge Log 기록
           </div>
-          
-          <div className="new-post">
-            <input 
-              type="text" 
-              className="post-input" 
-              placeholder="현재 진행 상황을 공유해보세요!" 
-              value={newPost}
-              onChange={(e) => setNewPost(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handlePost()}
-            />
-            <button className="post-btn" onClick={handlePost}><Send size={18} /></button>
-          </div>
+                    <div className={`new-post ${!isMember ? 'locked' : ''}`}>
+              <input 
+                type="text" 
+                className="post-input" 
+                placeholder={isMember ? "현재 진행 상황을 공유해보세요!" : "회원 전용: 현재 진행 상황 공유"} 
+                disabled={!isMember}
+                value={newPost}
+                onChange={(e) => setNewPost(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handlePost()}
+              />
+              <button className="post-btn" onClick={handlePost} disabled={!isMember}><Send size={18} /></button>
+              {!isMember && <div className="lock-icon-overlay"><TerminalSquare size={20} /></div>}
+            </div>
 
           <div className="feed-list">
             {feed.map(post => (

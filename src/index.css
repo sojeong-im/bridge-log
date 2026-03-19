@@ -785,6 +785,73 @@ header {
   border-color: var(--neon-blue);
 }
 
+/* Membership UI Styles */
+.member-verify-nav {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(12, 245, 116, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.member-code-input {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  width: 120px;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.verify-btn {
+  background: var(--neon-green);
+  color: black;
+  border: none;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.member-badge {
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  background: rgba(12, 245, 116, 0.1);
+}
+
+.view-only-notice {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.new-post.locked {
+  position: relative;
+  opacity: 0.6;
+}
+
+.lock-icon-overlay {
+  position: absolute;
+  top: 50%;
+  right: 65px;
+  transform: translateY(-50%);
+  color: var(--neon-green);
+  pointer-events: none;
+}
+
 @media (max-width: 768px) {
   .apply-grid {
     grid-template-columns: 1fr;
