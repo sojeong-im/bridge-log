@@ -76,6 +76,7 @@ function App() {
     { id: 3, title: '한강 치맥 나들이', date: '2026.03.20', location: '반포 한강공원', image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80', description: '날씨 최고! 돗자리 깔고 수다 중. 이런 게 행복이죠.', participants: ['로보', '유진스', '머니마스터', '건축왕'] },
     { id: 4, title: '브릿지 4기 오리엔테이션', date: '2026.03.02', location: '강남역 스터디룸', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80', description: '두근구근 첫 만남! 이번 기수 라인업 대박입니다.', participants: ['전원'] },
     { id: 5, title: '방탈출 카페 격파 성공!', date: '2026.03.25', location: '홍대입구', image: 'https://images.unsplash.com/photo-1496024840928-4c41702d1c3a?w=600&q=80', description: '힌트 하나도 안 쓰고 탈출! 우리 팀워크 무엇?', participants: ['미뉴', '로보', '작가님'] },
+    { id: 6, title: '🍰 당 충전 & 리프레쉬', location: '중앙대 정문 카페', image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80', description: '공부하다 지칠 땐 역시 달콤한 거! 케이크 한 입에 피로가 싹 가시네요 💖', participants: ['유진스', '로보'] },
   ]);
 
   const members = [
