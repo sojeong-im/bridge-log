@@ -8,6 +8,8 @@ import './index.css';
 function App() {
   const [view, setView] = useState('landing');
   const [studentType, setStudentType] = useState('');
+  const [studyStyle, setStudyStyle] = useState([]);
+  const [stressStyle, setStressStyle] = useState([]);
   const [tasks, setTasks] = useState([
     { id: 1, text: '운영체제 7단원 복습', completed: false },
     { id: 2, text: '리액트 컴포넌트 실습 과제', completed: true },
@@ -345,6 +347,41 @@ function App() {
             <div className="form-row">
               <label>출생 년도 (00-07년생 지원 가능) *</label>
               <input type="number" placeholder="예: 2002" min="2000" max="2007" />
+            </div>
+
+            <div className="form-row">
+              <label>거주지 (활동 장소 조율을 위해 필요) *</label>
+              <input type="text" placeholder="예: 서울시 성북구 / 강남역 인근" />
+            </div>
+
+            <div className="form-row">
+              <label>나의 공부 스타일 (중복 선택 가능) *</label>
+              <div className="tag-cloud">
+                {['침묵 독서실', '적당한 카공', '밤샘 야행성', '미라클 모닝', '함께 토론', '혼자 집중'].map(tag => (
+                  <div 
+                    key={tag} 
+                    className={`tag-chip ${studyStyle.includes(tag) ? 'active' : ''}`}
+                    onClick={() => setStudyStyle(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])}
+                  >
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="form-row">
+              <label>스트레스 해소법 (선호 활동 선택) *</label>
+              <div className="tag-cloud">
+                {['맛집 탐방', '영화/전시', '보드게임', '수다 발산', '활동적 운동', '조용한 산책'].map(tag => (
+                  <div 
+                    key={tag} 
+                    className={`tag-chip stress-tag ${stressStyle.includes(tag) ? 'active' : ''}`}
+                    onClick={() => setStressStyle(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])}
+                  >
+                    {tag}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="form-row">

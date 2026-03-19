@@ -725,6 +725,45 @@ header {
   animation: slideUp 0.4s ease forwards;
 }
 
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.tag-chip {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(12, 245, 116, 0.3);
+  background: rgba(12, 245, 116, 0.03);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tag-chip:hover {
+  background: rgba(12, 245, 116, 0.1);
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+
+.tag-chip.active {
+  background: var(--neon-green);
+  color: black;
+  border-color: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green);
+  font-weight: 700;
+}
+
+.stress-tag.active {
+  background: var(--neon-blue);
+  box-shadow: 0 0 10px var(--neon-blue);
+  border-color: var(--neon-blue);
+}
+
 .apply-section strong {
   color: var(--neon-green);
 }
