@@ -179,12 +179,17 @@ function App() {
         <div className="panel">
           <div className="panel-header pixel-font">
             <Users size={24} />
-            스터디 메이트 현황
+            스터디 회원 현황
           </div>
           
           <div className="member-list">
             {members.map((member, idx) => (
-              <div key={idx} className="member-item">
+              <div 
+                key={idx} 
+                className="member-item" 
+                onClick={() => !isMember && alert('회원 상세 정보는 멤버 코드 인증 후 열람할 수 있습니다.')}
+                style={{ cursor: !isMember ? 'pointer' : 'default' }}
+              >
                 <div className="member-avatar-text pixel-font">{member.avatar}</div>
                 <div className="member-info">
                   <div className="member-name">{member.name} <span className="member-status"><div className={`status-dot ${member.status}`}></div>{member.mood}</span></div>
