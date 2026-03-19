@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Users, BookOpen, Send, Terminal, 
   TerminalSquare, Camera, CheckSquare, Square
@@ -12,6 +12,19 @@ function App() {
   const [stressStyle, setStressStyle] = useState([]);
   const [isMember, setIsMember] = useState(false);
   const [memberCode, setMemberCode] = useState('');
+  
+  // Timer State
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [timerActive, setTimerActive] = useState(false);
+  const [timerInterval, setTimerInterval] = useState(null);
+
+  // D-Day State
+  const dDays = [
+    { title: '중간고사 시작', date: '2026-04-20', days: 32, progress: 60 },
+    { title: '건축설계 마감', date: '2026-03-25', days: 6, progress: 85 },
+    { title: '토익 정기시험', date: '2026-05-15', days: 57, progress: 20 },
+  ];
+
   const [tasks, setTasks] = useState([
     { id: 1, text: '대학원 전공 서적 3챕터 요약', completed: false },
     { id: 2, text: '토익 오답노트 정리', completed: true },
@@ -94,10 +107,45 @@ function App() {
     }
   };
 
+  const startTimer = () => {
+    if (timerActive) return;
+    setTimerActive(true);
+    const id = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 0) {
+          clearInterval(id);
+          setTimerActive(false);
+          alert('집중 시간이 종료되었습니다! 수고하셨습니다. ✨');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    setTimerInterval(id);
+  };
+
+  const pauseTimer = () => {
+    clearInterval(timerInterval);
+    setTimerActive(false);
+  };
+
+  const resetTimer = () => {
+    clearInterval(timerInterval);
+    setTimerActive(false);
+    setTimeLeft(25 * 60);
+  };
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  };
+
   const completedCount = tasks.filter(t => t.completed).length;
   const progressPercent = Math.round((completedCount / tasks.length) * 100);
 
-  const DashboardView = () => (
+  // Components moved inside as render functions to avoid losing focus
+  const renderDashboard = () => (
     <div className="app-container">
       <header>
         <div className="logo-wrapper" onClick={() => setView('landing')} style={{ cursor: 'pointer' }}>
@@ -137,7 +185,7 @@ function App() {
           계획은 세우지만 지켜지지 않고, 과제는 밀리나요?<br/>
           문제는 의지가 아니라 환경입니다! 🔥 Bridge Log로 같이 공부하는 환경을 만드세요!
         </p>
-        <button className="cta-button pixel-font">지원하기 (~4월 말)</button>
+        <button className="cta-button pixel-font" onClick={() => setView('apply')}>지원하기 (~4월 말)</button>
       </section>
 
       <div className="dashboard-grid">
@@ -209,19 +257,19 @@ function App() {
             <BookOpen size={24} />
             Bridge Log 기록
           </div>
-                    <div className={`new-post ${!isMember ? 'locked' : ''}`}>
-              <input 
-                type="text" 
-                className="post-input" 
-                placeholder={isMember ? "현재 진행 상황을 공유해보세요!" : "회원 전용: 현재 진행 상황 공유"} 
-                disabled={!isMember}
-                value={newPost}
-                onChange={(e) => setNewPost(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handlePost()}
-              />
-              <button className="post-btn" onClick={handlePost} disabled={!isMember}><Send size={18} /></button>
-              {!isMember && <div className="lock-icon-overlay"><TerminalSquare size={20} /></div>}
-            </div>
+          <div className={`new-post ${!isMember ? 'locked' : ''}`}>
+            <input 
+              type="text" 
+              className="post-input" 
+              placeholder={isMember ? "현재 진행 상황을 공유해보세요!" : "회원 전용: 현재 진행 상황 공유"} 
+              disabled={!isMember}
+              value={newPost}
+              onChange={(e) => setNewPost(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handlePost()}
+            />
+            <button className="post-btn" onClick={handlePost} disabled={!isMember}><Send size={18} /></button>
+            {!isMember && <div className="lock-icon-overlay"><TerminalSquare size={20} /></div>}
+          </div>
 
           <div className="feed-list">
             {feed.map(post => (
@@ -243,11 +291,48 @@ function App() {
             ))}
           </div>
         </div>
+
+        {/* Panel 4: Academic Utilities */}
+        <div className="panel utility-panel">
+          <div className="panel-header pixel-font">
+            <Terminal size={24} />
+            학습 유틸리티
+          </div>
+          
+          <div className="timer-section">
+            <div className="timer-display pixel-font">{formatTime(timeLeft)}</div>
+            <div className="timer-controls">
+              {!timerActive ? (
+                <button onClick={startTimer} className="timer-btn start">START</button>
+              ) : (
+                <button onClick={pauseTimer} className="timer-btn pause">PAUSE</button>
+              )}
+              <button onClick={resetTimer} className="timer-btn reset">RESET</button>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>25분 집중 - 뽀모도로 테크닉</p>
+          </div>
+
+          <div className="dday-section">
+            <h4 className="pixel-font" style={{ fontSize: '1rem', color: 'var(--neon-blue)', marginBottom: '15px' }}>📌 학업 카운트다운</h4>
+            {dDays.map((day, idx) => (
+              <div key={idx} className="dday-item">
+                <div className="dday-top">
+                  <span className="dday-title">{day.title}</span>
+                  <span className="dday-value pixel-font">D-{day.days}</span>
+                </div>
+                <div className="progress-container mini">
+                  <div className="progress-bar blue" style={{ width: `${day.progress}%` }}></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
 
-  const LandingView = () => (
+  const renderLanding = () => (
     <div className="landing-container">
       <div className="landing-content">
         <div className="landing-logo-box">
@@ -273,7 +358,7 @@ function App() {
             <div className="card-content">
               <Users size={48} className="card-icon" />
               <h2 className="pixel-font">브릿지 로그</h2>
-              <p>스터디 메이트들과<br/>실시간 학습 상황 공유 및 소통</p>
+              <p>스터디 멤버들과<br/>실시간 학습 상황 공유 및 소통</p>
               <div className="card-footer">
                 <span className="arrow-text">ENTER LOG -&gt;</span>
               </div>
@@ -288,7 +373,7 @@ function App() {
     </div>
   );
 
-  const ApplyView = () => (
+  const renderApply = () => (
     <div className="apply-container">
       <header>
         <div className="logo-wrapper" onClick={() => setView('landing')} style={{ cursor: 'pointer' }}>
@@ -357,7 +442,7 @@ function App() {
         <div className="apply-section important-rules">
           <h3 className="section-title pixel-font" style={{ color: '#ff3366' }}>⚠️ 필독: 유령회원 방지 정책_</h3>
           <p className="section-text">
-            매달 1회 이상 오프라인 참가는 필수입니다. (성실한 메이트 우대)<br/>
+            매달 1회 이상 오프라인 참가는 필수입니다. (성실한 멤버 우대)<br/>
             <strong>3회 이상 참석 시, 프리미엄 기능이 포함된 '브릿지 로그' 코드를 증정합니다!</strong>
           </p>
         </div>
@@ -452,20 +537,14 @@ function App() {
     </div>
   );
 
-  const CurrentView = () => {
-    switch(view) {
-      case 'dashboard': return <DashboardView />;
-      case 'apply': return <ApplyView />;
-      default: return <LandingView />;
-    }
-  };
-
   return (
     <>
       <div className="scanlines"></div>
-      <CurrentView />
+      {view === 'dashboard' ? renderDashboard() : 
+       view === 'apply' ? renderApply() : 
+       renderLanding()}
     </>
   );
 }
 
-export default App
+export default App;

@@ -879,6 +879,96 @@ header {
   pointer-events: none;
 }
 
+/* Utility Panel & Timer Styles */
+.utility-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.timer-section {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.timer-display {
+  font-size: 3.5rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 15px rgba(12, 245, 116, 0.4);
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.timer-btn {
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 900;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.timer-btn.start {
+  background: var(--neon-green);
+  color: black;
+}
+
+.timer-btn.pause {
+  background: #ffcc00;
+  color: black;
+}
+
+.timer-btn.reset {
+  background: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.timer-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.dday-item {
+  margin-bottom: 20px;
+}
+
+.dday-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dday-title {
+  font-size: 0.9rem;
+  color: white;
+}
+
+.dday-value {
+  color: var(--neon-blue);
+  font-weight: bold;
+}
+
+.progress-container.mini {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar.blue {
+  background: var(--neon-blue);
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
 @media (max-width: 768px) {
   .apply-grid {
     grid-template-columns: 1fr;
