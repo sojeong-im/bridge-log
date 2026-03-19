@@ -202,7 +202,7 @@ function App() {
         </div>
 
         <div className="choice-grid">
-          <div className="choice-card apply-card" onClick={() => alert('지원 페이지로 이동합니다 (준비 중)')}>
+          <div className="choice-card apply-card" onClick={() => setView('apply')}>
             <div className="card-glitch-bg"></div>
             <div className="card-content">
               <TerminalSquare size={48} className="card-icon" />
@@ -234,10 +234,91 @@ function App() {
     </div>
   );
 
+  const ApplyView = () => (
+    <div className="apply-container">
+      <header>
+        <div className="logo-wrapper" onClick={() => setView('landing')} style={{ cursor: 'pointer' }}>
+          <h1 className="logo">Bridge Lab_</h1>
+        </div>
+        <button onClick={() => setView('landing')} className="nav-item pixel-font back-btn">뒤로가기</button>
+      </header>
+
+      <div className="apply-hero">
+        <h2 className="apply-title pixel-font">📌 Bridge Lab 4기 모집 📌</h2>
+        <div className="apply-badge pixel-font">RECRUITING: 03.18 ~ 04.30</div>
+      </div>
+
+      <div className="apply-content">
+        <div className="apply-section">
+          <h3 className="section-title pixel-font">01. 우리의 철학_</h3>
+          <p className="section-text">
+            의지박약은 죄가 아닙니다. 단지 환경이 갖춰지지 않았을 뿐입니다.<br/>
+            Bridge Lab은 서로의 학습을 감시하고 자극을 주는 시스템으로 당신의 성공을 돕습니다.
+          </p>
+        </div>
+
+        <div className="apply-grid">
+          <div className="apply-info-box">
+            <h3 className="section-title pixel-font">02. 활동 내용_</h3>
+            <ul className="info-list">
+              <li>실시간 학습 현황 로그 공유</li>
+              <li>주간 목표 설정 및 달성 체크</li>
+              <li>주 2회 오프라인/온라인 스터디 모임</li>
+              <li>학습 데이터 분석 및 리포트 제공</li>
+            </ul>
+          </div>
+
+          <div className="apply-info-box">
+            <h3 className="section-title pixel-font">03. 지원 자격_</h3>
+            <ul className="info-list">
+              <li>성장하고 싶은 열망이 있는 모든 분</li>
+              <li>혼자보다는 함께할 때 시너지가 나는 분</li>
+              <li>책임감 있게 10주 과정을 완주하실 분</li>
+              <li>성실함 하나는 자신 있는 예비 메이트</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="apply-form-section">
+          <h3 className="section-title pixel-font" style={{ textAlign: 'center' }}>04. 지금 지원하세요_</h3>
+          <div className="placeholder-form">
+            <div className="form-row">
+              <label>성함 *</label>
+              <input type="text" placeholder="이름을 입력하세요" />
+            </div>
+            <div className="form-row">
+              <label>소속 (학교/직장) *</label>
+              <input type="text" placeholder="소속을 입력하세요" />
+            </div>
+            <div className="form-row">
+              <label>지원 동기 (짧게) *</label>
+              <textarea placeholder="지원 동기를 입력하세요"></textarea>
+            </div>
+            <button className="cta-button pixel-font" style={{ width: '100%' }} onClick={() => alert('지원이 완료되었습니다! (데모)')}>
+              지원서 제출하기
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="apply-footer">
+        © 2026 BRIDGE LAB. ALL RIGHTS RESERVED.
+      </div>
+    </div>
+  );
+
+  const CurrentView = () => {
+    switch(view) {
+      case 'dashboard': return <DashboardView />;
+      case 'apply': return <ApplyView />;
+      default: return <LandingView />;
+    }
+  };
+
   return (
     <>
       <div className="scanlines"></div>
-      {view === 'landing' ? <LandingView /> : <DashboardView />}
+      <CurrentView />
     </>
   );
 }
