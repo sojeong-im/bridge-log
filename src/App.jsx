@@ -169,7 +169,9 @@ function App() {
         </div>
         <nav className="nav-links pixel-font">
           <a href="#" className={`nav-item ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>브릿지 로그</a>
-          <a href="#" className={`nav-item ${view === 'life' ? 'active' : ''}`} onClick={() => setView('life')}>브릿지 라이프</a>
+          <a href="#" className={`nav-item ${view === 'life' ? 'active' : ''}`} onClick={() => setView('life')}>
+            브릿지 라이프<span className="nav-new-dot"></span>
+          </a>
           {!isMember && (
             <div className="member-verify-nav">
               <input 
@@ -358,6 +360,24 @@ function App() {
           </div>
         </div>
 
+      </div>
+
+      {/* Bridge Life Highlights - Desktop Bottom */}
+      <div className="dashboard-footer-highlights">
+        <h3 className="section-title pixel-font" style={{ fontSize: '1.2rem', color: 'var(--neon-blue)', marginBottom: '15px' }}>
+          ✨ 브릿지 라이프 하이라이트 _
+        </h3>
+        <div className="highlights-scroll">
+          {activities.map(activity => (
+            <div key={activity.id} className="highlight-item" onClick={() => setView('life')}>
+              <img src={activity.image} alt="pic" />
+              <div className="highlight-tag pixel-font">#{activity.location}</div>
+            </div>
+          ))}
+          <div className="highlight-more-card" onClick={() => setView('life')}>
+            <span className="pixel-font">모두 보기 {'->'}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -576,7 +596,9 @@ function App() {
         </div>
         <nav className="nav-links pixel-font">
           <a href="#" className={`nav-item ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>브릿지 로그</a>
-          <a href="#" className={`nav-item ${view === 'life' ? 'active' : ''}`} onClick={() => setView('life')}>브릿지 라이프</a>
+          <a href="#" className={`nav-item ${view === 'life' ? 'active' : ''}`} onClick={() => setView('life')}>
+            브릿지 라이프<span className="nav-new-dot"></span>
+          </a>
           {!isMember && (
             <div className="member-verify-nav">
               <input 
