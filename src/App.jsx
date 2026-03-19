@@ -37,7 +37,6 @@ function App() {
 
   const [newPost, setNewPost] = useState('');
   const [feed, setFeed] = useState([
-    { id: 101, name: '유진스 (심리)', avatar: 'YJ', content: '🍰 당 충전하면서 리프레쉬 중! 역시 시험 기간엔 디저트가 최고의 활력소인 것 같아요. 다들 달콤한 거 드시고 힘내세요!', time: '방금 전' },
     { id: 1, name: '코딩여우 (컴공)', avatar: '🦊', content: '🔥 오늘 중앙대 정문 주변 카페에서 같이 카공할 사람! (3시~7시)', time: '1분 전' },
     { id: 2, name: '유진스 (심리)', avatar: 'YJ', content: '논문 통계 돌리느라 하루가 다 갔네요.. SPSS랑 싸우는 중 ㅠㅠ', time: '23분 전' },
     { id: 3, name: '건축왕 (건축)', avatar: 'CW', content: '설계 마감 D-3. 밤샘 이틀차입니다. 다들 화이팅!', image: 'https://images.unsplash.com/photo-1503387762-592dea58ef01?w=400&q=80', time: '1시간 전' },
