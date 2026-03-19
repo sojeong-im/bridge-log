@@ -255,13 +255,32 @@ header {
   gap: 15px;
 }
 
-.member-avatar {
+.member-avatar-text {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   border: 2px solid var(--neon-green);
-  background-size: cover;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 245, 116, 0.1);
+  color: var(--neon-green);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.feed-avatar-mini {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--neon-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 245, 116, 0.2);
+  color: var(--neon-green);
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .member-info {

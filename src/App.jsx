@@ -13,31 +13,51 @@ function App() {
   const [isMember, setIsMember] = useState(false);
   const [memberCode, setMemberCode] = useState('');
   const [tasks, setTasks] = useState([
-    { id: 1, text: '운영체제 7단원 복습', completed: false },
-    { id: 2, text: '리액트 컴포넌트 실습 과제', completed: true },
-    { id: 3, text: 'Bridge Lab 공지 확인하기', completed: true },
-    { id: 4, text: '알고리즘 코테 2문제', completed: false },
+    { id: 1, text: '대학원 전공 서적 3챕터 요약', completed: false },
+    { id: 2, text: '토익 오답노트 정리', completed: true },
+    { id: 3, text: 'UI/UX 디자인 시스템 리서치', completed: true },
+    { id: 4, text: '알고리즘 기말 오픈카톡 공지 확인', completed: true },
+    { id: 5, text: '졸업 논문 초안 피드백 반영', completed: false },
+    { id: 6, text: '주간 스터디 루틴 기록 (Bridge Log)', completed: true },
   ]);
 
   const [newPost, setNewPost] = useState('');
   const [feed, setFeed] = useState([
     {
       id: 1,
-      name: '이수진 (컴공)',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-      content: '도서관에 자리 잡았습니다. 오늘 밤샘 예정 😂 거의 과제 모임이네요',
-      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80',
-      time: '10분 전'
+      name: '심유진 (심리)',
+      avatar: 'SY',
+      content: '논문 통계 돌리느라 하루가 다 갔네요..  SPSS랑 싸우는 중 ㅠㅠ 그래도 오늘 목표는 다 했습니다!',
+      image: null,
+      time: '23분 전'
     },
     {
       id: 2,
-      name: '김도현 (미대)',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
-      content: '드로잉 과제 시작! 다들 화이팅입니다✨ 전시회 끝나고 맛집가요~',
-      image: null,
+      name: '박건우 (건축)',
+      avatar: 'PK',
+      content: '설계 마감 D-3. 밤샘 이틀차입니다. 다들 카페인 충전 하시고 화이팅해요!',
+      image: 'https://images.unsplash.com/photo-1503387762-592dea58ef01?w=400&q=80',
       time: '1시간 전'
+    },
+    {
+      id: 3,
+      name: '최민지 (경영)',
+      avatar: 'CM',
+      content: '공인중개사 1차 인강 클리어! 이번 기수는 유독 공부 열기가 뜨거운 것 같아요.',
+      image: null,
+      time: '3시간 전'
     }
   ]);
+
+  const members = [
+    { name: '심유진', major: '심리학과', status: 'online', goal: '논문 통계 완성', avatar: 'SY', mood: '열공중' },
+    { name: '박건우', major: '건축학과', status: 'online', goal: '설계 마감', avatar: 'PK', mood: '밤샘중' },
+    { name: '최민지', major: '경영학과', status: 'busy', goal: '자격증 취득', avatar: 'CM', mood: '부재중' },
+    { name: '강현준', major: '컴퓨터공학', status: 'online', goal: '코딩 테스트 대비', avatar: 'KH', mood: '화이팅' },
+    { name: '윤아름', major: '미술대학', status: 'online', goal: '졸업 전시 기획', avatar: 'YA', mood: '드로잉 중' },
+    { name: '정동윤', major: '경제학과', status: 'offline', goal: '금융권 취업 준비', avatar: 'JD', mood: '로그오프' },
+    { name: '이지훈', major: '국어국문', status: 'online', goal: '창작 소설 탈고', avatar: 'LJ', mood: '집중중' },
+  ];
 
   const toggleTask = (id) => {
     if (!isMember) {
@@ -163,29 +183,15 @@ function App() {
           </div>
           
           <div className="member-list">
-            <div className="member-item">
-              <div className="member-avatar" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop)' }}></div>
-              <div className="member-info">
-                <div className="member-name">이수진 <span className="member-status"><div className="status-dot online"></div>열공중</span></div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>컴공 / 목표: OS 완강</div>
+            {members.map((member, idx) => (
+              <div key={idx} className="member-item">
+                <div className="member-avatar-text pixel-font">{member.avatar}</div>
+                <div className="member-info">
+                  <div className="member-name">{member.name} <span className="member-status"><div className={`status-dot ${member.status}`}></div>{member.mood}</span></div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{member.major} / 목표: {member.goal}</div>
+                </div>
               </div>
-            </div>
-
-            <div className="member-item">
-              <div className="member-avatar" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop)' }}></div>
-              <div className="member-info">
-                <div className="member-name">김도현 <span className="member-status"><div className="status-dot busy"></div>과제폭탄</span></div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>미대 / 목표: 포폴 완성</div>
-              </div>
-            </div>
-
-            <div className="member-item">
-              <div className="member-avatar" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop)' }}></div>
-              <div className="member-info">
-                <div className="member-name">최우식 <span className="member-status"><div className="status-dot online"></div>휴식중</span></div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>경영 / 목표: 자격증 준비</div>
-              </div>
-            </div>
+            ))}
           </div>
           <div style={{ marginTop: '20px', textAlign: 'center' }}>
             <span className="pixel-bubble" style={{ transform: 'rotate(-5deg)', display: 'inline-block' }}>같이 과제 할 사람~!</span>
@@ -216,7 +222,7 @@ function App() {
             {feed.map(post => (
               <div key={post.id} className="feed-item">
                 <div className="feed-header">
-                  <img src={post.avatar} alt="avatar" className="feed-avatar" />
+                  <div className="feed-avatar-mini pixel-font">{post.avatar}</div>
                   <div>
                     <div style={{ fontWeight: 'bold', fontSize: '0.9rem', color: 'var(--neon-green)' }}>{post.name}</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{post.time}</div>
