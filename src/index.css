@@ -933,6 +933,99 @@ header {
   pointer-events: none;
 }
 
+/* Bridge Life Gallery Styles */
+.life-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+}
+
+.life-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.life-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--neon-blue);
+  box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1);
+}
+
+.life-image-wrapper {
+  position: relative;
+  height: 200px;
+}
+
+.life-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.life-card:hover .life-image {
+  opacity: 1;
+}
+
+.life-date {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: var(--neon-blue);
+  color: black;
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  border-radius: 4px;
+}
+
+.life-card-content {
+  padding: 20px;
+}
+
+.life-title {
+  font-size: 1.1rem;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.life-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.life-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.location-tag {
+  font-size: 0.8rem;
+  color: var(--neon-green);
+}
+
+.participants-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.participant-chip {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Utility Panel & Timer Styles */
 .utility-panel {
   display: flex;

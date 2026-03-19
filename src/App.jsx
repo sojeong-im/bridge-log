@@ -69,6 +69,14 @@ function App() {
     { id: 30, name: '유진스 (심리)', avatar: 'YJ', content: 'Bridge Lab 들어오고 나서 공부 시간이 2배로 늘었어요 💖', time: '한 달 전' },
   ]);
 
+  const [activities, setActivities] = useState([
+    { id: 1, title: '국립현대미술관 전시 관람', date: '2026.03.10', location: '안국동', image: 'https://images.unsplash.com/photo-1518998053574-53f0261a4000?w=600&q=80', description: '다 같이 전시보러 왔어요! 영감 팍팍 받고 갑니다 ✨', participants: ['로보', '유진스', '건축왕'] },
+    { id: 2, title: '시험 끝! 성수동 카페 번개', date: '2026.03.15', location: '성수동', image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80', description: '전공 시험 다들 고생 많았어요! 수다는 역시 힐링..', participants: ['미뉴', '아르몽', '작가님'] },
+    { id: 3, title: '한강 치맥 나들이', date: '2026.03.20', location: '반포 한강공원', image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80', description: '날씨 최고! 돗자리 깔고 수다 중. 이런 게 행복이죠.', participants: ['로보', '유진스', '머니마스터', '건축왕'] },
+    { id: 4, title: '브릿지 4기 오리엔테이션', date: '2026.03.02', location: '강남역 스터디룸', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80', description: '두근구근 첫 만남! 이번 기수 라인업 대박입니다.', participants: ['전원'] },
+    { id: 5, title: '방탈출 카페 격파 성공!', date: '2026.03.25', location: '홍대입구', image: 'https://images.unsplash.com/photo-1496024840928-4c41702d1c3a?w=600&q=80', description: '힌트 하나도 안 쓰고 탈출! 우리 팀워크 무엇?', participants: ['미뉴', '로보', '작가님'] },
+  ]);
+
   const members = [
     { name: '유진스', major: '심리학과', status: 'online', goal: '논문 통계 완성', avatar: 'YJ', mood: '열공중' },
     { name: '건축왕', major: '건축학과', status: 'online', goal: '설계 마감', avatar: 'CW', mood: '밤샘중' },
@@ -160,7 +168,8 @@ function App() {
           <div className="pixel-bubble pixel-font">전멸 아님ㅋㅋ - 시험기간</div>
         </div>
         <nav className="nav-links pixel-font">
-          <a href="#" className="nav-item active">브릿지 로그 대시보드</a>
+          <a href="#" className={`nav-item ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>브릿지 로그</a>
+          <a href="#" className={`nav-item ${view === 'life' ? 'active' : ''}`} onClick={() => setView('life')}>브릿지 라이프</a>
           {!isMember && (
             <div className="member-verify-nav">
               <input 
@@ -558,11 +567,65 @@ function App() {
     </div>
   );
 
+  const renderLifeGallery = () => (
+    <div className="app-container">
+      <header>
+        <div className="logo-wrapper" onClick={() => setView('landing')} style={{ cursor: 'pointer' }}>
+          <h1 className="logo">Bridge Life_</h1>
+          <div className="pixel-bubble pixel-font">함께 노는 중 - OFF DUTY</div>
+        </div>
+        <nav className="nav-links pixel-font">
+          <a href="#" className={`nav-item ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>브릿지 로그</a>
+          <a href="#" className={`nav-item ${view === 'life' ? 'active' : ''}`} onClick={() => setView('life')}>브릿지 라이프</a>
+          {!isMember && (
+            <div className="member-verify-nav">
+              <input 
+                type="password" 
+                placeholder="멤버 코드 입력" 
+                value={memberCode}
+                onChange={(e) => setMemberCode(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleMemberVerify()}
+                className="member-code-input"
+              />
+              <button onClick={handleMemberVerify} className="verify-btn">인증</button>
+            </div>
+          )}
+          {isMember && <span className="member-badge pixel-font">MEMBER ACCESS</span>}
+          <a href="#" className="nav-item" onClick={() => setView('landing')}>나가기</a>
+        </nav>
+      </header>
+
+      <div className="life-gallery-grid">
+        {activities.map(activity => (
+          <div key={activity.id} className="life-card">
+            <div className="life-image-wrapper">
+              <img src={activity.image} alt={activity.title} className="life-image" />
+              <div className="life-date pixel-font">{activity.date}</div>
+            </div>
+            <div className="life-card-content">
+              <h3 className="life-title pixel-font">{activity.title}</h3>
+              <p className="life-desc">{activity.description}</p>
+              <div className="life-meta">
+                <span className="location-tag">📍 {activity.location}</span>
+                <div className="participants-chips">
+                  {activity.participants.map(p => (
+                    <span key={p} className="participant-chip">#{p}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <>
       <div className="scanlines"></div>
       {view === 'dashboard' ? renderDashboard() : 
        view === 'apply' ? renderApply() : 
+       view === 'life' ? renderLifeGallery() :
        renderLanding()}
     </>
   );
