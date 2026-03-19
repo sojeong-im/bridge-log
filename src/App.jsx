@@ -7,6 +7,7 @@ import './index.css';
 
 function App() {
   const [view, setView] = useState('landing');
+  const [studentType, setStudentType] = useState('');
   const [tasks, setTasks] = useState([
     { id: 1, text: '운영체제 7단원 복습', completed: false },
     { id: 2, text: '리액트 컴포넌트 실습 과제', completed: true },
@@ -244,57 +245,113 @@ function App() {
       </header>
 
       <div className="apply-hero">
-        <h2 className="apply-title pixel-font">📌 Bridge Lab 4기 모집 📌</h2>
-        <div className="apply-badge pixel-font">RECRUITING: 03.18 ~ 04.30</div>
+        <h2 className="apply-title pixel-font">📌 &lt;&lt;Bridge Lab&gt;&gt; 4기 모집 📌</h2>
+        <div className="apply-badge pixel-font">RECRUITING: ~04월 말 까지</div>
       </div>
 
       <div className="apply-content">
-        <div className="apply-section">
-          <h3 className="section-title pixel-font">01. 우리의 철학_</h3>
+        <div className="apply-section main-intro">
+          <h3 className="section-title pixel-font">01. 의지가 아니라 환경입니다_</h3>
           <p className="section-text">
-            의지박약은 죄가 아닙니다. 단지 환경이 갖춰지지 않았을 뿐입니다.<br/>
-            Bridge Lab은 서로의 학습을 감시하고 자극을 주는 시스템으로 당신의 성공을 돕습니다.
+            혼자 공부하면 흐지부지 끝난 적 많지 않나요? 계획은 세우지만 지켜지지 않고, 과제는 밀리고...<br/>
+            문제는 의지가 아니라 <strong>환경</strong>입니다! 🔥<br/><br/>
+            Bridge Lab은 같이 공부하는 환경을 만들고 공유하는 스터디 모임입니다.<br/>
+            기존 멤버가 탄탄하여 그대로 진행하려다 활발한 소통을 위해 추가 모집을 결정하게 되었습니다!
           </p>
+        </div>
+
+        <div className="apply-section app-story">
+          <div className="app-highlight-box">
+            <h3 className="section-title pixel-font">📱 Bridge Log_</h3>
+            <p className="section-text">
+              운영진이 직접 제작한 전용 앱(실제 회원 사용 중!)을 통해 각자의 과제, 공부, 목표를 기록합니다.<br/>
+              서로의 진행 상황을 실시간으로 공유하며 <strong>‘하지 않으면 안 되는 환경’</strong>을 함께 만들어갑니다. ✨
+            </p>
+          </div>
         </div>
 
         <div className="apply-grid">
           <div className="apply-info-box">
             <h3 className="section-title pixel-font">02. 활동 내용_</h3>
             <ul className="info-list">
-              <li>실시간 학습 현황 로그 공유</li>
-              <li>주간 목표 설정 및 달성 체크</li>
-              <li>주 2회 오프라인/온라인 스터디 모임</li>
-              <li>학습 데이터 분석 및 리포트 제공</li>
+              <li>Bridge Log 기반 스터디 & 과제 진행</li>
+              <li>주 1회 함께하는 공부 루틴 형성</li>
+              <li>월 1~2회 문화 활동 (전시, 영화, 맛집)</li>
+              <li>다양한 전공 간 네트워킹 (정보 공유)</li>
             </ul>
           </div>
 
           <div className="apply-info-box">
-            <h3 className="section-title pixel-font">03. 지원 자격_</h3>
+            <h3 className="section-title pixel-font">03. 모집 대상_</h3>
             <ul className="info-list">
-              <li>성장하고 싶은 열망이 있는 모든 분</li>
-              <li>혼자보다는 함께할 때 시너지가 나는 분</li>
-              <li>책임감 있게 10주 과정을 완주하실 분</li>
-              <li>성실함 하나는 자신 있는 예비 메이트</li>
+              <li>혼자서는 꾸준함이 어려운 분</li>
+              <li>자극 받는 환경이 필요한 분</li>
+              <li>공부와 스트레스 해소를 동시에 원하는 분</li>
+              <li>00-07년생 대학생/대학원생 (~5명)</li>
             </ul>
           </div>
         </div>
 
+        <div className="apply-section activity-method">
+          <h3 className="section-title pixel-font">04. 활동 방식 & 장소_</h3>
+          <p className="section-text">
+            • 비슷한 전공 계열 혹은 3~5명 조별 활동<br/>
+            • 운영진 학교 또는 스터디룸 대여 활용<br/>
+            • 의견이 맞을 시 조별로 자유롭게 카페 이동 가능
+          </p>
+        </div>
+
+        <div className="apply-section important-rules">
+          <h3 className="section-title pixel-font" style={{ color: '#ff3366' }}>⚠️ 필독: 유령회원 방지 정책_</h3>
+          <p className="section-text">
+            매달 1회 이상 오프라인 참가는 필수입니다. (성실한 메이트 우대)<br/>
+            <strong>3회 이상 참석 시, 프리미엄 기능이 포함된 '브릿지 로그' 코드를 증정합니다!</strong>
+          </p>
+        </div>
+
         <div className="apply-form-section">
-          <h3 className="section-title pixel-font" style={{ textAlign: 'center' }}>04. 지금 지원하세요_</h3>
+          <h3 className="section-title pixel-font" style={{ textAlign: 'center' }}>05. 지금 지원하세요_</h3>
           <div className="placeholder-form">
             <div className="form-row">
               <label>성함 *</label>
               <input type="text" placeholder="이름을 입력하세요" />
             </div>
+            
             <div className="form-row">
-              <label>소속 (학교/직장) *</label>
-              <input type="text" placeholder="소속을 입력하세요" />
+              <label>구분 (현재 대학원생 비율 40%) *</label>
+              <div className="type-selection">
+                <button 
+                  className={`type-btn ${studentType === 'undergrad' ? 'selected' : ''}`}
+                  onClick={() => setStudentType('undergrad')}
+                >
+                  대학생
+                </button>
+                <button 
+                  className={`type-btn ${studentType === 'grad' ? 'selected' : ''}`}
+                  onClick={() => setStudentType('grad')}
+                >
+                  대학원생
+                </button>
+              </div>
             </div>
+
+            {studentType && (
+              <div className="form-row animate-in">
+                <label>{studentType === 'undergrad' ? '대학교명 *' : '대학원/과정명 *'}</label>
+                <input type="text" placeholder="학교 이름을 입력하세요" />
+              </div>
+            )}
+
             <div className="form-row">
-              <label>지원 동기 (짧게) *</label>
-              <textarea placeholder="지원 동기를 입력하세요"></textarea>
+              <label>출생 년도 (00-07년생 지원 가능) *</label>
+              <input type="number" placeholder="예: 2002" min="2000" max="2007" />
             </div>
-            <button className="cta-button pixel-font" style={{ width: '100%' }} onClick={() => alert('지원이 완료되었습니다! (데모)')}>
+
+            <div className="form-row">
+              <label>지원 동기 및 각오 *</label>
+              <textarea placeholder="함께 열공하고 싶은 이유를 들려주세요!"></textarea>
+            </div>
+            <button className="cta-button pixel-font" style={{ width: '100%' }} onClick={() => alert('지원이 완료되었습니다! 곧 운영진이 연락드리겠습니다.')}>
               지원서 제출하기
             </button>
           </div>
