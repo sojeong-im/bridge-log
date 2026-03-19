@@ -38,6 +38,14 @@ function App() {
   const [feed, setFeed] = useState([
     {
       id: 1,
+      name: '강현준 (컴공)',
+      avatar: 'KH',
+      content: '🔥 오늘 중앙대 정문 주변 카페에서 같이 카공할 사람! (3시~7시)',
+      image: null,
+      time: '방금 전'
+    },
+    {
+      id: 2,
       name: '심유진 (심리)',
       avatar: 'SY',
       content: '논문 통계 돌리느라 하루가 다 갔네요..  SPSS랑 싸우는 중 ㅠㅠ 그래도 오늘 목표는 다 했습니다!',
