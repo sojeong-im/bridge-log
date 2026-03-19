@@ -622,7 +622,6 @@ function App() {
           <div key={activity.id} className="life-card">
             <div className="life-image-wrapper">
               <img src={activity.image} alt={activity.title} className="life-image" />
-              <div className="life-date pixel-font">{activity.date}</div>
             </div>
             <div className="life-card-content">
               <h3 className="life-title pixel-font">{activity.title}</h3>
