@@ -27,6 +27,14 @@ function App() {
   const [memberCode, setMemberCode] = useState('');
   const [visiblePosts, setVisiblePosts] = useState(5);
   
+  // URL routing for Admin
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === '/admin' || path === '/mgmt') {
+      setView('admin-login');
+    }
+  }, []);
+  
   // Application Data States
   const [submissions, setSubmissions] = useState([]);
   const [selectedApp, setSelectedApp] = useState(null);
