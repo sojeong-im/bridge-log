@@ -1316,3 +1316,36 @@ header {
     font-size: 0.9rem;
   }
 }
+
+/* 관리자 전용 스타일 */
+.admin-view { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.admin-table-container { 
+  background: rgba(0, 0, 0, 0.4); 
+  border: 1px solid var(--neon-blue); 
+  border-radius: 8px; 
+  overflow: hidden; 
+  margin-top: 20px;
+}
+.admin-table { width: 100%; border-collapse: collapse; color: white; }
+.admin-table th { background: rgba(0, 163, 255, 0.1); color: var(--neon-blue); padding: 15px; text-align: left; border-bottom: 2px solid var(--neon-blue); }
+.admin-table td { padding: 12px 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.admin-table tr:hover { background: rgba(255, 255, 255, 0.03); }
+.action-btn { background: none; border: none; cursor: pointer; transition: 0.2s; padding: 5px; }
+.action-btn:hover { transform: scale(1.2); }
+.action-btn.view { color: var(--neon-green); }
+.action-btn.delete { color: #ff3366; }
+
+.detail-modal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.95); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+}
+.detail-content {
+  background: #0a0a0a; border: 1px solid var(--neon-blue); width: 100%; max-width: 600px;
+  max-height: 90vh; overflow-y: auto; padding: 40px; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 163, 255, 0.2);
+}
+.detail-row { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.detail-label { display: block; font-size: 0.75rem; color: var(--neon-blue); margin-bottom: 6px; letter-spacing: 1px; }
+.detail-value { font-size: 1rem; color: #eee; line-height: 1.6; }
+
+.login-center { height: 80vh; display: flex; align-items: center; justify-content: center; }
+.admin-login-box { padding: 40px; border: 2px solid var(--neon-green); box-shadow: 0 0 20px rgba(57, 255, 20, 0.2); }

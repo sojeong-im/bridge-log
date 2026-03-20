@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Users, BookOpen, Send, Terminal, 
-  TerminalSquare, Camera, CheckSquare, Square
+  TerminalSquare, Camera, CheckSquare, Square,
+  ShieldCheck, Lock, RotateCw, Trash2, Eye, LayoutDashboard, ChevronLeft, X
 } from 'lucide-react';
+import { db } from './lib/firebase';
+import { 
+  collection, 
+  addDoc, 
+  getDocs, 
+  deleteDoc, 
+  doc, 
+  query, 
+  orderBy, 
+  serverTimestamp 
+} from 'firebase/firestore';
 import './index.css';
 
 function App() {
@@ -11,9 +23,21 @@ function App() {
   const [studyStyle, setStudyStyle] = useState([]);
   const [stressStyle, setStressStyle] = useState([]);
   const [isMember, setIsMember] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [memberCode, setMemberCode] = useState('');
   const [visiblePosts, setVisiblePosts] = useState(5);
   
+  // Application Data States
+  const [submissions, setSubmissions] = useState([]);
+  const [selectedApp, setSelectedApp] = useState(null);
+  const [applyForm, setApplyForm] = useState({
+    name: '',
+    school: '',
+    birthYear: '',
+    address: '',
+    motivation: ''
+  });
+
   // Timer State
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [timerActive, setTimerActive] = useState(false);
@@ -120,6 +144,74 @@ function App() {
       alert('멤버 인증에 성공했습니다! 환영합니다.');
     } else {
       alert('잘못된 코드입니다. 다시 확인해 주세요.');
+    }
+  };
+
+  const handleAdminLogin = () => {
+    if (memberCode === '00347') {
+      setIsAdmin(true);
+      setMemberCode('');
+      setView('admin-panel');
+      fetchApplications();
+    } else {
+      alert('관리자 모드 전용 코드가 아닙니다.');
+    }
+  };
+
+  const fetchApplications = async () => {
+    try {
+      const q = query(collection(db, 'applications'), orderBy('created_at', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        created_at: doc.data().created_at?.toDate() || new Date()
+      }));
+      setSubmissions(data);
+    } catch (err) {
+      console.error('Error fetching applications:', err.message);
+    }
+  };
+
+  const handleApplySubmit = async () => {
+    if (!applyForm.name || !studentType || !applyForm.school || !applyForm.birthYear || !applyForm.address || !applyForm.motivation) {
+      alert('모든 필수 항목(*)을 입력해 주세요.');
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, 'applications'), {
+        name: applyForm.name,
+        student_type: studentType,
+        school: applyForm.school,
+        birth_year: parseInt(applyForm.birthYear),
+        address: applyForm.address,
+        study_styles: studyStyle,
+        stress_styles: stressStyle,
+        motivation: applyForm.motivation,
+        created_at: serverTimestamp()
+      });
+
+      alert('지원이 완료되었습니다! 곧 운영진이 연락드리겠습니다.');
+      // Reset form
+      setApplyForm({ name: '', school: '', birthYear: '', address: '', motivation: '' });
+      setStudentType('');
+      setStudyStyle([]);
+      setStressStyle([]);
+      setView('landing');
+    } catch (err) {
+      alert('제출 중 오류가 발생했습니다: ' + err.message);
+    }
+  };
+
+  const deleteApplication = async (id) => {
+    if (!window.confirm('정말 삭제하시겠습니까? 데이터는 복구할 수 없습니다.')) return;
+    try {
+      await deleteDoc(doc(db, 'applications', id));
+      setSubmissions(submissions.filter(app => app.id !== id));
+      if (selectedApp && selectedApp.id === id) setSelectedApp(null);
+    } catch (err) {
+      alert('삭제 실패: ' + err.message);
     }
   };
 
@@ -419,6 +511,12 @@ function App() {
 
         <div className="landing-footer pixel-font">
           SYSTEM READY: USER_INITIALIZED_2026
+          <span 
+            onClick={() => setView('admin-login')} 
+            style={{ marginLeft: '15px', opacity: 0.2, cursor: 'pointer', fontSize: '0.7rem' }}
+          >
+            [MGMT]
+          </span>
         </div>
       </div>
     </div>
@@ -503,7 +601,12 @@ function App() {
           <div className="placeholder-form">
             <div className="form-row">
               <label>성함 *</label>
-              <input type="text" placeholder="이름을 입력하세요" />
+              <input 
+                type="text" 
+                placeholder="이름을 입력하세요" 
+                value={applyForm.name}
+                onChange={(e) => setApplyForm({...applyForm, name: e.target.value})}
+              />
             </div>
             
             <div className="form-row">
@@ -527,18 +630,34 @@ function App() {
             {studentType && (
               <div className="form-row animate-in">
                 <label>{studentType === 'undergrad' ? '대학교명 *' : '대학원/과정명 *'}</label>
-                <input type="text" placeholder="학교 이름을 입력하세요" />
+                <input 
+                  type="text" 
+                  placeholder="학교 이름을 입력하세요" 
+                  value={applyForm.school}
+                  onChange={(e) => setApplyForm({...applyForm, school: e.target.value})}
+                />
               </div>
             )}
 
             <div className="form-row">
               <label>출생 년도 (00-07년생 지원 가능) *</label>
-              <input type="number" placeholder="예: 2002" min="2000" max="2007" />
+              <input 
+                type="number" 
+                placeholder="예: 2002" 
+                min="2000" max="2007" 
+                value={applyForm.birthYear}
+                onChange={(e) => setApplyForm({...applyForm, birthYear: e.target.value})}
+              />
             </div>
 
             <div className="form-row">
               <label>거주지 (활동 장소 조율을 위해 필요) *</label>
-              <input type="text" placeholder="예: 서울시 성북구 / 강남역 인근" />
+              <input 
+                type="text" 
+                placeholder="예: 서울시 성북구 / 강남역 인근" 
+                value={applyForm.address}
+                onChange={(e) => setApplyForm({...applyForm, address: e.target.value})}
+              />
             </div>
 
             <div className="form-row">
@@ -573,9 +692,13 @@ function App() {
 
             <div className="form-row">
               <label>지원 동기 및 각오 *</label>
-              <textarea placeholder="함께 열공하고 싶은 이유를 들려주세요!"></textarea>
+              <textarea 
+                placeholder="함께 열공하고 싶은 이유를 들려주세요!"
+                value={applyForm.motivation}
+                onChange={(e) => setApplyForm({...applyForm, motivation: e.target.value})}
+              ></textarea>
             </div>
-            <button className="cta-button pixel-font" style={{ width: '100%' }} onClick={() => alert('지원이 완료되었습니다! 곧 운영진이 연락드리겠습니다.')}>
+            <button className="cta-button pixel-font" style={{ width: '100%' }} onClick={handleApplySubmit}>
               지원서 제출하기
             </button>
           </div>
@@ -585,6 +708,130 @@ function App() {
       <div className="apply-footer">
         © 2026 BRIDGE LAB. ALL RIGHTS RESERVED.
       </div>
+    </div>
+  );
+
+  const renderAdminLogin = () => (
+    <div className="landing-container login-center">
+      <div className="panel admin-login-box">
+        <h2 className="pixel-font" style={{ color: 'var(--neon-green)', marginBottom: '30px' }}>&lt; SYSTEM_ADMIN_AUTH &gt;</h2>
+        <div className="form-row">
+          <label className="pixel-font">ENTER PASSCODE</label>
+          <input 
+            type="password" 
+            className="member-code-input" 
+            placeholder="****"
+            value={memberCode}
+            onChange={(e) => setMemberCode(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
+          />
+        </div>
+        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+          <button className="cta-button" onClick={handleAdminLogin} style={{ flex: 1 }}>UNLOCK</button>
+          <button className="nav-item" onClick={() => setView('landing')} style={{ border: '1px solid #333' }}>EXIT</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderAdminPanel = () => (
+    <div className="app-container admin-view">
+      <header>
+        <div className="logo-wrapper">
+          <h1 className="logo">Admin_Bridge_Submissions</h1>
+        </div>
+        <nav className="nav-links pixel-font">
+          <button className="refresh-btn" onClick={fetchApplications}>
+            <RotateCw size={14} /> REFRESH
+          </button>
+          <a href="#" className="nav-item" onClick={() => { setIsAdmin(false); setView('landing'); }}>LOGOUT</a>
+        </nav>
+      </header>
+
+      <div className="panel" style={{ gridColumn: '1 / -1' }}>
+        <div className="panel-header pixel-font">
+          <ShieldCheck size={20} />
+          지원서 접수 목록 ({submissions.length})
+        </div>
+        <div className="admin-table-container">
+          <table className="admin-table">
+            <thead>
+              <tr className="pixel-font">
+                <th>이름</th>
+                <th>구분</th>
+                <th>출생</th>
+                <th>지원일시</th>
+                <th>관련항목</th>
+              </tr>
+            </thead>
+            <tbody>
+              {submissions.map(app => (
+                <tr key={app.id}>
+                  <td style={{ fontWeight: 'bold', color: 'var(--neon-green)' }}>{app.name}</td>
+                  <td>{app.student_type === 'undergrad' ? '학부생' : '대학원생'}</td>
+                  <td>{app.birth_year}</td>
+                  <td style={{ fontSize: '0.8rem', opacity: 0.6 }}>{new Date(app.created_at).toLocaleString()}</td>
+                  <td style={{ display: 'flex', gap: '10px' }}>
+                    <button className="action-btn view" onClick={() => setSelectedApp(app)} title="상세보기">
+                      <Eye size={18} />
+                    </button>
+                    <button className="action-btn delete" onClick={() => deleteApplication(app.id)} title="삭제">
+                      <Trash2 size={18} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {submissions.length === 0 && (
+                <tr>
+                  <td colSpan="5" style={{ textAlign: 'center', padding: '40px', opacity: 0.5 }}>접수된 지원서가 없습니다.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {selectedApp && (
+        <div className="detail-modal" onClick={() => setSelectedApp(null)}>
+          <div className="detail-content" onClick={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 className="pixel-font" style={{ color: 'var(--neon-green)', margin: 0 }}>지원서 상세보기</h2>
+              <button className="action-btn" onClick={() => setSelectedApp(null)}><X size={24} /></button>
+            </div>
+            
+            <div className="detail-row">
+              <span className="detail-label">NAME</span>
+              <div className="detail-value">{selectedApp.name} ({selectedApp.student_type === 'undergrad' ? '학부생' : '대학원생'})</div>
+            </div>
+
+            <div className="detail-row">
+              <span className="detail-label">SCHOOL / BIRTH / ADDRESS</span>
+              <div className="detail-value">{selectedApp.school} / {selectedApp.birth_year}년생 / {selectedApp.address}</div>
+            </div>
+
+            <div className="detail-row">
+              <span className="detail-label">STUDY STYLE</span>
+              <div className="detail-value">
+                {selectedApp.study_styles?.map(s => <span key={s} className="participant-chip" style={{ marginRight: '5px' }}>#{s}</span>)}
+              </div>
+            </div>
+
+            <div className="detail-row">
+              <span className="detail-label">STRESS RELIEF</span>
+              <div className="detail-value">
+                {selectedApp.stress_styles?.map(s => <span key={s} className="participant-chip" style={{ marginRight: '5px', borderColor: '#ff3366', color: '#ff3366' }}>#{s}</span>)}
+              </div>
+            </div>
+
+            <div className="detail-row">
+              <span className="detail-label">MOTIVATION</span>
+              <div className="detail-value" style={{ whiteSpace: 'pre-wrap' }}>{selectedApp.motivation}</div>
+            </div>
+
+            <button className="cta-button" style={{ width: '100%', marginTop: '20px' }} onClick={() => setSelectedApp(null)}>확인 완료</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -648,6 +895,8 @@ function App() {
       {view === 'dashboard' ? renderDashboard() : 
        view === 'apply' ? renderApply() : 
        view === 'life' ? renderLifeGallery() :
+       view === 'admin-login' ? renderAdminLogin() :
+       view === 'admin-panel' ? renderAdminPanel() :
        renderLanding()}
     </>
   );
