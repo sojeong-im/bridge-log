@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sojeong-im.github.io/bridge-log/sitemap.xml
