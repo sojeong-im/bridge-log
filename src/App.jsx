@@ -40,6 +40,7 @@ function App() {
   const [selectedApp, setSelectedApp] = useState(null);
   const [applyForm, setApplyForm] = useState({
     name: '',
+    phone: '',
     school: '',
     birthYear: '',
     address: '',
@@ -182,7 +183,7 @@ function App() {
   };
 
   const handleApplySubmit = async () => {
-    if (!applyForm.name || !studentType || !applyForm.school || !applyForm.birthYear || !applyForm.address || !applyForm.motivation) {
+    if (!applyForm.name || !applyForm.phone || !studentType || !applyForm.school || !applyForm.birthYear || !applyForm.address || !applyForm.motivation) {
       alert('모든 필수 항목(*)을 입력해 주세요.');
       return;
     }
@@ -190,6 +191,7 @@ function App() {
     try {
       await addDoc(collection(db, 'applications'), {
         name: applyForm.name,
+        phone: applyForm.phone,
         student_type: studentType,
         school: applyForm.school,
         birth_year: parseInt(applyForm.birthYear),
@@ -202,7 +204,7 @@ function App() {
 
       alert('지원이 완료되었습니다! 곧 운영진이 연락드리겠습니다.');
       // Reset form
-      setApplyForm({ name: '', school: '', birthYear: '', address: '', motivation: '' });
+      setApplyForm({ name: '', phone: '', school: '', birthYear: '', address: '', motivation: '' });
       setStudentType('');
       setStudyStyle([]);
       setStressStyle([]);
@@ -616,6 +618,16 @@ function App() {
                 onChange={(e) => setApplyForm({...applyForm, name: e.target.value})}
               />
             </div>
+
+            <div className="form-row">
+              <label>연락처 *</label>
+              <input 
+                type="tel" 
+                placeholder="010-0000-0000" 
+                value={applyForm.phone}
+                onChange={(e) => setApplyForm({...applyForm, phone: e.target.value})}
+              />
+            </div>
             
             <div className="form-row">
               <label>구분 (현재 대학원생 비율 40%) *</label>
@@ -766,8 +778,13 @@ function App() {
             <thead>
               <tr className="pixel-font">
                 <th>이름</th>
+                <th>연락처</th>
                 <th>구분</th>
                 <th>출생</th>
+                <th>거주지</th>
+                <th>공부 스타일</th>
+                <th>스트레스 해소법</th>
+                <th>지원 동기</th>
                 <th>지원일시</th>
                 <th>관련항목</th>
               </tr>
@@ -776,8 +793,13 @@ function App() {
               {submissions.map(app => (
                 <tr key={app.id}>
                   <td style={{ fontWeight: 'bold', color: 'var(--neon-green)' }}>{app.name}</td>
+                  <td>{app.phone}</td>
                   <td>{app.student_type === 'undergrad' ? '학부생' : '대학원생'}</td>
                   <td>{app.birth_year}</td>
+                  <td>{app.address}</td>
+                  <td style={{ maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={app.study_styles?.join(', ')}>{app.study_styles?.join(', ')}</td>
+                  <td style={{ maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={app.stress_styles?.join(', ')}>{app.stress_styles?.join(', ')}</td>
+                  <td style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={app.motivation}>{app.motivation}</td>
                   <td style={{ fontSize: '0.8rem', opacity: 0.6 }}>{new Date(app.created_at).toLocaleString()}</td>
                   <td style={{ display: 'flex', gap: '10px' }}>
                     <button className="action-btn view" onClick={() => setSelectedApp(app)} title="상세보기">
@@ -791,7 +813,7 @@ function App() {
               ))}
               {submissions.length === 0 && (
                 <tr>
-                  <td colSpan="5" style={{ textAlign: 'center', padding: '40px', opacity: 0.5 }}>접수된 지원서가 없습니다.</td>
+                  <td colSpan="10" style={{ textAlign: 'center', padding: '40px', opacity: 0.5 }}>접수된 지원서가 없습니다.</td>
                 </tr>
               )}
             </tbody>
@@ -810,6 +832,11 @@ function App() {
             <div className="detail-row">
               <span className="detail-label">NAME</span>
               <div className="detail-value">{selectedApp.name} ({selectedApp.student_type === 'undergrad' ? '학부생' : '대학원생'})</div>
+            </div>
+
+            <div className="detail-row">
+              <span className="detail-label">PHONE</span>
+              <div className="detail-value">{selectedApp.phone || '미입력'}</div>
             </div>
 
             <div className="detail-row">
