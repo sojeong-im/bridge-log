@@ -54,7 +54,7 @@ function App() {
 
   // D-Day State
   const dDays = [
-    { title: '중간고사 시작', date: '2026-04-20', days: 32, progress: 60 },
+    { title: '중간고사 시작', date: '2026-04-06', days: 5, progress: 90 },
     { title: '건축설계 마감', date: '2026-03-25', days: 6, progress: 85 },
     { title: '토익 정기시험', date: '2026-05-15', days: 57, progress: 20 },
   ];
