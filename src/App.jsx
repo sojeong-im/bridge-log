@@ -38,6 +38,7 @@ function App() {
   // Application Data States
   const [submissions, setSubmissions] = useState([]);
   const [selectedApp, setSelectedApp] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [applyForm, setApplyForm] = useState({
     name: '',
     phone: '',
@@ -167,6 +168,7 @@ function App() {
   };
 
   const fetchApplications = async () => {
+    setErrorMsg(null);
     try {
       const q = query(collection(db, 'applications'), orderBy('created_at', 'desc'));
       const querySnapshot = await getDocs(q);
@@ -178,6 +180,7 @@ function App() {
       setSubmissions(data);
     } catch (err) {
       console.error('Error fetching applications:', err.message);
+      setErrorMsg(err.message);
     }
   };
 
@@ -772,6 +775,11 @@ function App() {
           <ShieldCheck size={20} />
           지원서 접수 목록 ({submissions.length})
         </div>
+        {errorMsg && (
+          <div className="error-notice pixel-font" style={{ padding: '15px', color: '#ff3366', backgroundColor: 'rgba(255, 51, 102, 0.1)', borderBottom: '1px solid #ff3366' }}>
+            [!] ERROR_FETCH_FAILED: {errorMsg}
+          </div>
+        )}
         <div className="admin-table-container">
           <table className="admin-table">
             <thead>
